@@ -1,0 +1,115 @@
+﻿<UserControl x:Class="Project.UserControls.Historychart"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Project"
+             xmlns:lvs="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+             xmlns:userControls="clr-namespace:Project.UserControls"
+             xmlns:mui="http://firstfloorsoftware.com/ModernUI"
+             xmlns:Converters="clr-namespace:Project.Converters" 
+             mc:Ignorable="d" d:DesignWidth="1200" Height="297.222">
+    <UserControl.Resources>
+        <Converters:NotNullConverter x:Key="NotNullConverter"/>
+        <Converters:CharToVectorConverter x:Key="CharToVectorConverter"/>
+        <Converters:SpanToDaysNumConverter x:Key="SpanToDaysNumConverter"/>
+        <Style TargetType="{x:Type ListViewItem}">
+            <Style.Triggers>
+                <Trigger Property="IsSelected" Value="true" >
+                    <Setter Property="Foreground" Value="Transparent" />
+                    <Setter Property="Background" Value="Transparent" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+
+    <StackPanel Orientation="Horizontal" >
+        <ListView x:Name="listView" Width="350" Height="600" ItemsSource="{Binding OptionList}" SelectedItem="{Binding SelectedOption}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <userControls:OptionCard DataContext="{Binding}" Margin="0,0,0,6"/>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel MaxWidth="{Binding ActualWidth, ElementName=listView, Mode=OneWay}"/>
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+
+
+
+        </ListView>
+        <Grid>
+            <lvs:CartesianChart  Width="810" >
+                <lvs:CartesianChart.Series >
+                    <lvs:LineSeries x:Name="HistoryChart" 
+                       PointGeometrySize="0"
+                    Values="{Binding ViewList}" 
+                     Stroke = "#1ba1e2"/>
+                </lvs:CartesianChart.Series>
+                <lvs:CartesianChart.AxisX>
+                    <lvs:Axis x:Name="X" LabelFormatter="{Binding XAxis}" />
+                </lvs:CartesianChart.AxisX>
+                <lvs:CartesianChart.AxisY>
+                    <lvs:Axis x:Name="Y" LabelFormatter="{Binding YAxis}"/>
+                </lvs:CartesianChart.AxisY>
+
+            </lvs:CartesianChart>
+
+            <ListView
+                
+                ItemsSource="{Binding SpanOptions}" 
+                SelectedItem="{Binding SelectedSpan, Converter={StaticResource SpanToDaysNumConverter}}"
+                Width="105"
+                Height="35"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Bottom"
+                Margin="35,0,55,30"
+                >
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <mui:ModernButton IsHitTestVisible="False" IconWidth="14" IconHeight="14" IconData="{Binding Converter={StaticResource CharToVectorConverter}, Mode=OneWay}" />
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal"></StackPanel>
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
+            </ListView>
+            <Grid>
+                <Grid.Style>
+                    <Style TargetType="{x:Type Grid}">
+                        <Setter Property="Visibility" Value="Hidden"></Setter>
+                        <Style.Triggers>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding SelectedItem, Converter={StaticResource NotNullConverter}, ElementName=listView}" Value="{x:Null}"></Condition>
+                                    <Condition Binding="{Binding ElementName=HistoryChart, Path=Values}" Value="{x:Null}"></Condition>
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.Setters>
+                                    <Setter Property="Visibility" Value="Visible"></Setter>
+                                </MultiDataTrigger.Setters>
+                            </MultiDataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Grid.Style>
+                <mui:ModernProgressRing Foreground="#1ba1e2"  IsActive="True" Width="160" Height="160" Style="{StaticResource CircleProgressRingStyle}"/>
+            </Grid>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <StackPanel.Style>
+                    <Style TargetType="{x:Type StackPanel}">
+                        <Setter Property="Visibility" Value="Collapsed"></Setter>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ElementName=listView, Path=SelectedItem}" Value="{x:Null}">
+                                <Setter Property="Visibility" Value="Visible"></Setter>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </StackPanel.Style>
+                <Path Width="39.25" Height="28" Canvas.Left="17.75" Canvas.Top="24" Stretch="Fill" Fill="#1ba1e2" Data="F1 M 57,42L 57,34L 32.25,34L 42.25,24L 31.75,24L 17.75,38L 31.75,52L 42.25,52L 32.25,42L 57,42 Z " Margin="0,0,0,2"/>
+                <TextBlock Text=" Select a currency" FontSize="50"  Foreground="#1ba1e2" FontWeight="Bold" FontFamily="Open Sans Hebrew"/>
+            </StackPanel>
+        </Grid>
+    </StackPanel>
+</UserControl>
