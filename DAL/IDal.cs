@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using DataProtocol;
@@ -28,7 +28,7 @@ namespace DAL
         /// </summary>
         /// <param name="date">date to return info about</param>
         /// <returns>currency info about chosen date</returns>
-        Task<HistoricalCurrencyEntity> GetCurrencyByDay(DateTime date);
+       // Task<HistoricalCurrencyEntity> GetCurrencyByDay(DateTime date);//Gilad
 
         /// <summary>
         /// gets updated, live information about the supported currencies
