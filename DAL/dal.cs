@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -8,8 +8,7 @@ using DAL.EF_Contexts;
 using Newtonsoft.Json;
 
 namespace DAL {
-    public class Dal : IDal
-    {
+    public class Dal : IDal {
         /// <summary>
         /// for key generation <see cref="GetKey"/>
         /// </summary>
@@ -73,6 +72,7 @@ namespace DAL {
                                         break;
                                 }
                                 catch (Exception e) {
+                                    Console.WriteLine(e.Message);
                                 }
                             }
                         }
@@ -94,21 +94,6 @@ namespace DAL {
                 await ctx.SaveChangesAsync();
             }
         }
-
-
-        //IEnumerable<HistoricalCurrencyEntity> GetMonthCurrency(DateTime month)
-        //{
-        //    IEnumerable<HistoricalCurrencyEntity> items;
-        //    //it is assumed that if a month is selected, the year has already been loaded
-        //    string parsedDate = ParseDate(month);
-        //    using (var db = new currencyContext()) {
-        //        items = from b in db.HistoricalCurrency
-        //                let date = parsedDate.Substring(3)
-        //                where b.date.Contains(date)
-        //                select b;
-        //    }
-        //    return items;
-        //}
 
         /// <summary>
         /// get currency info a number of days back
@@ -138,39 +123,26 @@ namespace DAL {
         }
 
         private static readonly string[] Keys = {
-            //"7d11aed63b58dddf74d36ff2369ff323", oldKey
-            //"58076a627d929149eedbaa9159423ff6", oldKey
+            "7d11aed63b58dddf74d36ff2369ff323",
+            "58076a627d929149eedbaa9159423ff6",
             "e0715f57b6713e2c9e7a121847d794db",
             "3e871e8d9e9c99c50ec8b0270b2247f4",
             "de4ef6619c81caa797369e9acb834424",
             "06c5b80cf88d7f836e347af070d3f748",
             "85399f88745dae77c1a154c2acd1bd28",
             "60bc52cca10516c91cc0de83a7489552",
-            "6487c30c97dd457e7830280a12eaa9c8"
+            "6487c30c97dd457e7830280a12eaa9c8",
+            "0b6603b48665945e4b4cecc07725bdd1",
+            "5d8ad51ff93d8414739353778c923147",
+            "86931bd1c51bb0e6c33b550286f56349",
+            "b540bfe73f053eed6386379ff9acdddc",
+            "9fdc7553b8d6f4dec9eeb826255805b1",
+            "a6c9c78e68cf346ccdb0c4c09d46ee4d",
+            "36099d61984307f45ddad92bf30fc026",
+            "a0cfd6312e362bcf8f464cb1dd29c40c",
+            "68265087114652c23e2687a092811529",
+            "047269bd70bc4b6e73c96a31c97dbf90"
          };
-
-        /// <summary>
-        /// get info regarding a specific date
-        /// </summary>
-        /// <param name="date">date to return info about</param>
-        /// <returns>currency info about chosen date</returns>
-        public async Task<HistoricalCurrencyEntity> GetCurrencyByDay(DateTime date)
-        {
-            string parsedDate = ParseDate(date);
-            using (var db = new CurrencyContext()) {
-                IEnumerable<HistoricalCurrencyEntity> items;
-
-                do {
-                    items = from b in db.HistoricalCurrency
-                            where b.date == parsedDate
-                            select b;
-
-                    if (items.Any()) return items.FirstOrDefault();//info found in database
-                    await UpdateDataBaseAsync(date, date);//update
-                } while (!items.Any());
-            }
-            return null; //something went very wrong
-        }
 
         /// <summary>
         /// gets updated, live information about the supported currencies
