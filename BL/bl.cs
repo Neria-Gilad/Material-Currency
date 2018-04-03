@@ -28,7 +28,7 @@ namespace BL {
         /// <returns>returns the ratio SRC/DST </returns>
         public async Task<double> ConvertAsync(string fromCurrency, string toCurrency)
         {
-            HistoricalCurrencyEntity currentInfo = await new Dal().GetCurrencyByDay(DateTime.Today);
+            HistoricalCurrencyEntity currentInfo = (await new Dal().GetTimeSpanCurrency(1)).FirstOrDefault();//Gilad - was get by day
             double from = 1 / currentInfo.GetValue(fromCurrency); // 1/(USD/from) = from/USD
             double to = currentInfo.GetValue(toCurrency); //USD/to   
             return from * to; // from/USD * USD/to = from/to
