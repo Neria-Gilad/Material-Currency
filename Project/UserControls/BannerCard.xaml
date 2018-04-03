@@ -53,9 +53,11 @@
                 <Grid.Style>
                     <Style TargetType="{x:Type Grid}">
                         <Setter Property="Visibility" Value="Hidden"/>
+
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding ElementName=Currencies, Path=ItemsSource}" Value="{x:Null}">
                                 <Setter Property="Visibility" Value="Visible"></Setter>
+
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>

@@ -13,14 +13,6 @@
         <Converters:NotNullConverter x:Key="NotNullConverter"/>
         <Converters:CharToVectorConverter x:Key="CharToVectorConverter"/>
         <Converters:SpanToDaysNumConverter x:Key="SpanToDaysNumConverter"/>
-        <Style TargetType="{x:Type ListViewItem}">
-            <Style.Triggers>
-                <Trigger Property="IsSelected" Value="true" >
-                    <Setter Property="Foreground" Value="Transparent" />
-                    <Setter Property="Background" Value="Transparent" />
-                </Trigger>
-            </Style.Triggers>
-        </Style>
     </UserControl.Resources>
 
     <StackPanel Orientation="Horizontal" >
@@ -100,15 +92,19 @@
                 <StackPanel.Style>
                     <Style TargetType="{x:Type StackPanel}">
                         <Setter Property="Visibility" Value="Collapsed"></Setter>
+
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding ElementName=listView, Path=SelectedItem}" Value="{x:Null}">
                                 <Setter Property="Visibility" Value="Visible"></Setter>
+
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>
                 </StackPanel.Style>
-                <Path Width="39.25" Height="28" Canvas.Left="17.75" Canvas.Top="24" Stretch="Fill" Fill="#1ba1e2" Data="F1 M 57,42L 57,34L 32.25,34L 42.25,24L 31.75,24L 17.75,38L 31.75,52L 42.25,52L 32.25,42L 57,42 Z " Margin="0,0,0,2"/>
-                <TextBlock Text=" Select a currency" FontSize="50"  Foreground="#1ba1e2" FontWeight="Bold" FontFamily="Open Sans Hebrew"/>
+                <Path Width="39.25" Height="28" Canvas.Left="17.75" Canvas.Top="24" Stretch="Fill" Fill="#1ba1e2" Data="M10.273,5.009c0.444-0.444,1.143-0.444,1.587,0c0.429,0.429,0.429,1.143,0,1.571l-8.047,8.047h26.554
+	c0.619,0,1.127,0.492,1.127,1.111c0,0.619-0.508,1.127-1.127,1.127H3.813l8.047,8.032c0.429,0.444,0.429,1.159,0,1.587
+	c-0.444,0.444-1.143,0.444-1.587,0l-9.952-9.952c-0.429-0.429-0.429-1.143,0-1.571L10.273,5.009z" Margin="0,0,0,2"/>
+                <TextBlock Text=" Select a currency" FontSize="50"  Foreground="#1ba1e2" FontFamily="Open Sans Hebrew Light"/>
             </StackPanel>
         </Grid>
     </StackPanel>
