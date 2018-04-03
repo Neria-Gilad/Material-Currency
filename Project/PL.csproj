@@ -97,6 +97,9 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Assets\MyStyles.xaml.cs">
+      <DependentUpon>MyStyles.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Commands\ButtonCommand.cs" />
     <Compile Include="Converters\CharToVectorConverter.cs" />
     <Compile Include="Converters\CurrencyFlagConverter.cs" />
@@ -126,6 +129,10 @@
     </Compile>
     <Compile Include="ViewModels\GraphViewModel.cs" />
     <Compile Include="ViewModels\LiveViewModel.cs" />
+    <Page Include="Assets\MyStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UserControls\BannerCard.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
